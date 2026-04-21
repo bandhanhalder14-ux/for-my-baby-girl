@@ -13,19 +13,33 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  background: url("yourphoto.jpg.jpeg") no-repeat center/cover;
   font-family: Arial, sans-serif;
   overflow: hidden;
 }
 
+/* Slight dark overlay (NO BLUR) */
+body::before {
+  content: "";
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.35);
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
 /* Card */
 .card {
+  position: relative;
   background: white;
   padding: 25px;
   border-radius: 20px;
   text-align: center;
   max-width: 320px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  z-index: 1;
 }
 
 /* Button */
@@ -58,6 +72,7 @@ button:hover {
   bottom: -10px;
   font-size: 20px;
   animation: floatUp 6s linear forwards;
+  z-index: 2;
 }
 
 @keyframes floatUp {
@@ -98,27 +113,23 @@ button:hover {
 
   <!-- HIDDEN MESSAGE -->
   <div id="msg">
-    No matter what happens…when things get too heavy run into my arms.
-    I am always here for you ❤️  
+    When things get heavy, run into my arms.  
+    I'm always here for you ❤️  
     <br><br>
-    When things get heavy, just come to me.  
-    Go and give your exam like the strong girl I love 💖
+    Go and give the exam like the strong girl I love ❤️
   </div>
 </div>
 
 <!-- SCRIPT -->
 <script>
 function startExperience() {
-  // Play music
   const music = document.getElementById("bgMusic");
   music.play().catch(() => {
     alert("Tap again ❤️");
   });
 
-  // Show hidden message
   document.getElementById("msg").style.display = "block";
 
-  // Start hearts animation
   setInterval(createHeart, 300);
 }
 
@@ -130,9 +141,7 @@ function createHeart() {
   heart.style.fontSize = (Math.random() * 20 + 10) + "px";
   document.body.appendChild(heart);
 
-  setTimeout(() => {
-    heart.remove();
-  }, 6000);
+  setTimeout(() => heart.remove(), 6000);
 }
 </script>
 
