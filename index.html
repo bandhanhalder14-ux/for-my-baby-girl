@@ -10,36 +10,40 @@ body {
   margin: 0;
   padding: 0;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: url("yourphoto.jpg.jpeg") no-repeat center/cover;
   font-family: Arial, sans-serif;
   overflow: hidden;
 }
 
-/* Slight dark overlay (NO BLUR) */
-body::before {
-  content: "";
+/* BACKGROUND IMAGE */
+.bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: url("yourphoto.jpg.jpeg") no-repeat center/cover;
+  z-index: -2;
+}
+
+/* DARK OVERLAY (NO BLUR) */
+.overlay {
   position: fixed;
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.35);
-  top: 0;
-  left: 0;
-  z-index: 0;
+  z-index: -1;
 }
 
 /* Card */
 .card {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
   background: white;
   padding: 25px;
   border-radius: 20px;
   text-align: center;
   max-width: 320px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  z-index: 1;
 }
 
 /* Button */
@@ -66,13 +70,12 @@ button:hover {
   font-weight: bold;
 }
 
-/* Floating hearts */
+/* Hearts */
 .heart {
   position: fixed;
   bottom: -10px;
   font-size: 20px;
   animation: floatUp 6s linear forwards;
-  z-index: 2;
 }
 
 @keyframes floatUp {
@@ -85,6 +88,10 @@ button:hover {
 </head>
 
 <body>
+
+<!-- BACKGROUND -->
+<div class="bg"></div>
+<div class="overlay"></div>
 
 <!-- AUDIO -->
 <audio id="bgMusic" preload="auto">
@@ -108,23 +115,18 @@ button:hover {
     just remember — I'm right here with you.
   </p>
 
-  <!-- BUTTON -->
   <button onclick="startExperience()">Tap here ❤️</button>
 
-  <!-- HIDDEN MESSAGE -->
   <div id="msg">
-    When things get heavy, run into my arms.  
-    I'm always here for you ❤️  
-    <br><br>
+    When things get heavy, run into my arms.<br>
+    I'm always here for you ❤️<br><br>
     Go and give the exam like the strong girl I love ❤️
   </div>
 </div>
 
-<!-- SCRIPT -->
 <script>
 function startExperience() {
-  const music = document.getElementById("bgMusic");
-  music.play().catch(() => {
+  document.getElementById("bgMusic").play().catch(() => {
     alert("Tap again ❤️");
   });
 
