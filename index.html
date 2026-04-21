@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
+
+<style>
+@keyframes float {
+    0% { transform: translateY(0); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+.heart {
+    position: fixed;
+    bottom: -10px;
+    color: #f472b6;
+    font-size: 20px;
+    animation: float 6s linear infinite;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    overflow: hidden;
+}
+
+/* Background */
+.bg {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url("yourphoto.jpg.jpeg") no-repeat center/cover;
+    filter: blur(2px) brightness(0.8);
+    transform: scale(1.05);
+    z-index: -1;
+}
+
+/* Card */
+.card {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.4);
+    padding: 30px;
+    border-radius: 20px;
+    width: 350px;
+    backdrop-filter: blur(10px);
+}
+
+h1 {
+    color: #f472b6;
+}
+
+p {
+    color: #e2e8f0;
+    line-height: 1.6;
+}
+
+.btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #f472b6;
+    border-radius: 20px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.hidden {
+    display: none;
+    margin-top: 15px;
+    color: #f9a8d4;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background -->
+<div class="bg"></div>
+
+<!-- Audio -->
+<audio id="bgMusic" preload="auto">
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Card -->
+<div class="card">
+    <h1>Hey my sweet little baby girl ❤️</h1>
+
+    <p>
+        I know you're stressed… I know you're scared…  
+        but listen to me — this exam does NOT define you.  
+        <br><br>
+        You’ve worked hard. You’ve come this far.  
+        Even if no one sees your effort, I do.  
+        And no matter what happens,  
+        I am ALWAYS proud of you.
+        <br><br>
+        Even if you feel like you're breaking down,  
+        just remember — I'm right here with you.
+    </p>
+
+    <div class="btn" onclick="showMsg()">Click me ❤️</div>
+
+    <div class="hidden" id="msg">
+        No matter what happens…  
+        I am always here for you ❤️  
+        <br><br>
+        Go and give your exam like the strong girl I love 💖
+    </div>
+</div>
+
+<!-- Hearts -->
+<script>
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 6000);
+}
+setInterval(createHeart, 300);
+</script>
+
+<!-- Button + Music -->
+<script>
+function showMsg(){
+    document.getElementById("msg").style.display = "block";
+
+    const music = document.getElementById("bgMusic");
+    music.currentTime = 0;
+
+    music.play().catch(() => {
+        alert("Tap again ❤️");
+    });
+}
+</script>
+
+</body>
+</html>
