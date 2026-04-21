@@ -44,6 +44,14 @@ button:hover {
   background: #e63950;
 }
 
+/* Hidden message */
+#msg {
+  display: none;
+  margin-top: 15px;
+  color: #444;
+  font-weight: bold;
+}
+
 /* Floating hearts */
 .heart {
   position: fixed;
@@ -87,6 +95,16 @@ button:hover {
 
   <!-- BUTTON -->
   <button onclick="startExperience()">Tap here ❤️</button>
+
+  <!-- HIDDEN MESSAGE -->
+  <div id="msg">
+    No matter what happens… when things get too heavy,
+    run into my arms.
+    I am always here for you ❤️  
+    <br><br>
+    When things get heavy, just come to me.  
+    Go and give your exam like the strong girl I love 💖
+  </div>
 </div>
 
 <!-- SCRIPT -->
@@ -94,7 +112,12 @@ button:hover {
 function startExperience() {
   // Play music
   const music = document.getElementById("bgMusic");
-  music.play();
+  music.play().catch(() => {
+    alert("Tap again ❤️");
+  });
+
+  // Show hidden message
+  document.getElementById("msg").style.display = "block";
 
   // Start hearts animation
   setInterval(createHeart, 300);
