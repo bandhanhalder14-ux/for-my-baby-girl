@@ -6,142 +6,111 @@
 <title>For You ❤️</title>
 
 <style>
-@keyframes float {
-    0% { transform: translateY(0); opacity: 0; }
-    50% { opacity: 1; }
-    100% { transform: translateY(-100vh); opacity: 0; }
-}
-
-.heart {
-    position: fixed;
-    bottom: -10px;
-    color: #f472b6;
-    font-size: 20px;
-    animation: float 6s linear infinite;
-}
-
 body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    color: white;
-    overflow: hidden;
-}
-
-/* Background */
-.bg {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: url("yourphoto.jpg.jpeg") no-repeat center/cover;
-    filter: blur(0px) brightness(1);
-    transform: scale(1.05);
-    z-index: -1;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  font-family: Arial, sans-serif;
+  overflow: hidden;
 }
 
 /* Card */
 .card {
-    position: absolute;
-    top: 50%;
-    left: 10%;
-    transform: translateY(-50%);
-    background: rgba(0,0,0,0.4);
-    padding: 30px;
-    border-radius: 20px;
-    width: 350px;
-    backdrop-filter: blur(10px);
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 320px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-h1 {
-    color: #f472b6;
+/* Button */
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  border: none;
+  background: #ff4d6d;
+  color: white;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
-p {
-    color: #e2e8f0;
-    line-height: 1.6;
+button:hover {
+  background: #e63950;
 }
 
-.btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: #f472b6;
-    border-radius: 20px;
-    cursor: pointer;
-    display: inline-block;
+/* Floating hearts */
+.heart {
+  position: fixed;
+  bottom: -10px;
+  font-size: 20px;
+  animation: floatUp 6s linear forwards;
 }
 
-.hidden {
-    display: none;
-    margin-top: 15px;
-    color: #f9a8d4;
+@keyframes floatUp {
+  to {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- Background -->
-<div class="bg"></div>
-
-<!-- Audio -->
+<!-- AUDIO -->
 <audio id="bgMusic" preload="auto">
-    <source src="song.mp3.mp3" type="audio/mpeg">
+  <source src="song.mp3.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Card -->
+<!-- CARD -->
 <div class="card">
-    <h1>Hey my sweet little baby girl ❤️</h1>
+  <h1>Hey my sweet little baby girl ❤️</h1>
 
-    <p>
-        I know you're stressed… I know you're scared…  
-        but listen to me — this exam does NOT define you.  
-        <br><br>
-        You’ve worked hard. You’ve come this far.  
-        Even if no one sees your effort, I do.  
-        And no matter what happens,  
-        I am ALWAYS proud of you.
-        <br><br>
-        Even if you feel like you're breaking down,  
-        just remember — I'm right here with you.
-    </p>
+  <p>
+    I know you're stressed... I know you're scared.<br>
+    But listen to me — this exam does NOT define you.<br><br>
 
-    <div class="btn" onclick="showMsg()">Click me ❤️</div>
+    You've worked hard. You've come this far.<br>
+    Even if no one sees your effort, I do.<br>
+    And no matter what happens,<br>
+    I am ALWAYS proud of you.<br><br>
 
-    <div class="hidden" id="msg">
-        No matter what happens…  
-        I am always here for you ❤️  
-        <br><br>
-        Go and give your exam like the strong girl I love 💖
-    </div>
+    Even if you feel like you're breaking down,<br>
+    just remember — I'm right here with you.
+  </p>
+
+  <!-- BUTTON -->
+  <button onclick="startExperience()">Tap here ❤️</button>
 </div>
 
-<!-- Hearts -->
+<!-- SCRIPT -->
 <script>
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "❤";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (Math.random() * 20 + 10) + "px";
-    document.body.appendChild(heart);
+function startExperience() {
+  // Play music
+  const music = document.getElementById("bgMusic");
+  music.play();
 
-    setTimeout(() => {
-        heart.remove();
-    }, 6000);
+  // Start hearts animation
+  setInterval(createHeart, 300);
 }
-setInterval(createHeart, 300);
-</script>
 
-<!-- Button + Music -->
-<script>
-function showMsg(){
-    document.getElementById("msg").style.display = "block";
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+  document.body.appendChild(heart);
 
-    const music = document.getElementById("bgMusic");
-    music.currentTime = 0;
-
-    music.play().catch(() => {
-        alert("Tap again ❤️");
-    });
+  setTimeout(() => {
+    heart.remove();
+  }, 6000);
 }
 </script>
 
