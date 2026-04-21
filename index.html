@@ -14,7 +14,7 @@ body {
   overflow: hidden;
 }
 
-/* BACKGROUND IMAGE */
+/* Background */
 .bg {
   position: fixed;
   width: 100%;
@@ -23,7 +23,7 @@ body {
   z-index: -2;
 }
 
-/* DARK OVERLAY (NO BLUR) */
+/* Overlay */
 .overlay {
   position: fixed;
   width: 100%;
@@ -32,18 +32,32 @@ body {
   z-index: -1;
 }
 
-/* Card */
+/* Glass Card */
 .card {
   position: absolute;
   top: 50%;
   left: 10%;
   transform: translateY(-50%);
-  background: white;
-  padding: 25px;
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 30px;
+  border-radius: 25px;
   text-align: center;
-  max-width: 320px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  max-width: 340px;
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+/* Text */
+h1 {
+  color: #ff9ecb;
+  text-shadow: 0 0 10px rgba(255, 158, 203, 0.6);
+}
+
+p {
+  color: #f1f5f9;
+  line-height: 1.6;
 }
 
 /* Button */
@@ -51,22 +65,24 @@ button {
   margin-top: 15px;
   padding: 10px 20px;
   border: none;
-  background: #ff4d6d;
+  background: linear-gradient(45deg, #ff4d6d, #ff9ecb);
   color: white;
   font-size: 16px;
-  border-radius: 10px;
+  border-radius: 20px;
   cursor: pointer;
+  box-shadow: 0 0 15px rgba(255, 77, 109, 0.6);
+  transition: 0.3s;
 }
 
 button:hover {
-  background: #e63950;
+  transform: scale(1.05);
 }
 
 /* Hidden message */
 #msg {
   display: none;
   margin-top: 15px;
-  color: #444;
+  color: #ffe4ec;
   font-weight: bold;
 }
 
@@ -89,16 +105,16 @@ button:hover {
 
 <body>
 
-<!-- BACKGROUND -->
+<!-- Background -->
 <div class="bg"></div>
 <div class="overlay"></div>
 
-<!-- AUDIO -->
+<!-- Audio -->
 <audio id="bgMusic" preload="auto">
   <source src="song.mp3.mp3" type="audio/mpeg">
 </audio>
 
-<!-- CARD -->
+<!-- Card -->
 <div class="card">
   <h1>Hey my sweet little baby girl ❤️</h1>
 
@@ -126,7 +142,8 @@ button:hover {
 
 <script>
 function startExperience() {
-  document.getElementById("bgMusic").play().catch(() => {
+  const music = document.getElementById("bgMusic");
+  music.play().catch(() => {
     alert("Tap again ❤️");
   });
 
