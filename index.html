@@ -41,19 +41,20 @@ body {
 
 /* Card (RESPONSIVE MAGIC) */
 .card {
-  width: 90%;
-  max-width: 400px;
-  padding: 20px;
+  width: clamp(260px, 85vw, 420px);
+  max-height: 80vh;            /* 🔥 reduced from full height */
+  overflow-y: auto;
 
-  background: rgba(255, 255, 255, 0.15);
+  padding: clamp(15px, 4vw, 25px);
+
+  background: var(--card-bg);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 
   border-radius: 20px;
   text-align: center;
 
-  border: 1px solid rgba(255,255,255,0.3);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
 }
 
 /* Text */
