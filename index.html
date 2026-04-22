@@ -39,7 +39,7 @@ body {
   z-index: -1;
 }
 
-/* ENTRY SCREEN */
+/* Entry Screen */
 #entryScreen {
   position: fixed;
   inset: 0;
@@ -79,7 +79,6 @@ body {
   border: 1px solid rgba(255,255,255,0.2);
   box-shadow: 0 10px 40px rgba(0,0,0,0.5);
 
-  /* hidden initially */
   opacity: 0;
   transform: scale(0.9);
   transition: all 0.5s ease;
@@ -128,7 +127,7 @@ button:hover {
   line-height: 1.5;
 }
 
-/* Hearts */
+/* Floating emojis */
 .heart {
   position: fixed;
   bottom: -10px;
@@ -146,33 +145,21 @@ button:hover {
 
 <body>
 
-<!-- Background -->
 <div id="bg"></div>
 <div class="overlay"></div>
 
-<!-- Entry Screen -->
 <div id="entryScreen">
   <div class="entryText" onclick="openCard()">Tap to open ❤️</div>
 </div>
 
-<!-- Audio -->
 <audio id="bgMusic">
   <source src="song.mp3.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Card -->
 <div class="card">
   <h1>Hey my sweet little baby girl ❤️</h1>
 
-  <p>
-    I know you're stressed... I know you're scared.<br><br>
-    This exam does NOT define you.<br><br>
-
-    You've worked hard. You've come this far.<br>
-    Even if no one sees it, I do.<br><br>
-
-    I am ALWAYS proud of you ❤️
-  </p>
+  <p id="typingText"></p>
 
   <button onclick="startExperience()">Tap here ❤️</button>
 
@@ -184,12 +171,44 @@ button:hover {
 </div>
 
 <script>
+const message = `I know you're stressed... I know you're scared.
+
+This exam does NOT define you.
+
+You've worked hard. You've come this far.
+Even if no one sees it, I do.
+
+I am ALWAYS proud of you ❤️`;
+
+function typeText() {
+  let i = 0;
+  const speed = 35;
+  const target = document.getElementById("typingText");
+  target.innerHTML = "";
+
+  function typing() {
+    if (i < message.length) {
+      if (message.charAt(i) === "\n") {
+        target.innerHTML += "<br><br>";
+      } else {
+        target.innerHTML += message.charAt(i);
+      }
+      i++;
+      setTimeout(typing, speed);
+    }
+  }
+
+  typing();
+}
+
 function openCard() {
   document.getElementById("entryScreen").style.display = "none";
 
   const card = document.querySelector(".card");
   card.style.opacity = "1";
   card.style.transform = "scale(1)";
+
+  typeText();
 }
 
 function startExperience() {
@@ -208,11 +227,16 @@ function startExperience() {
 }
 
 function createHeart() {
+  const symbols = ["❤️", "💕", "💖", "✨", "🌸"];
+
   const heart = document.createElement("div");
   heart.classList.add("heart");
-  heart.innerHTML = "❤️";
+
+  heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+
   heart.style.left = Math.random() * 100 + "vw";
   heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+
   document.body.appendChild(heart);
 
   setTimeout(() => heart.remove(), 6000);
