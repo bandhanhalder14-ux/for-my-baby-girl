@@ -5,27 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For You ❤️</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
 <style>
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
-  padding: 0;
   min-height: 100vh;
-  font-family: Arial, sans-serif;
-  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  font-family: 'Lato', sans-serif;
 }
 
 /* Background */
-.bg {
+#bg {
   position: fixed;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: url("yourphoto.jpg.jpeg") no-repeat center/cover;
   z-index: -2;
 }
@@ -33,21 +34,43 @@ body {
 /* Overlay */
 .overlay {
   position: fixed;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: rgba(0,0,0,0.35);
   z-index: -1;
 }
 
-/* Card (RESPONSIVE MAGIC) */
+/* ENTRY SCREEN */
+#entryScreen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.6);
+  z-index: 10;
+}
+
+.entryText {
+  color: #ff9ecb;
+  font-size: 24px;
+  cursor: pointer;
+  text-shadow: 0 0 10px rgba(255, 158, 203, 0.8);
+  transition: 0.3s;
+}
+
+.entryText:hover {
+  transform: scale(1.1);
+}
+
+/* Card */
 .card {
   width: clamp(260px, 85vw, 420px);
-  max-height: 80vh;            /* 🔥 reduced from full height */
+  max-height: 80vh;
   overflow-y: auto;
 
   padding: clamp(15px, 4vw, 25px);
 
-  background: var(--card-bg);
+  background: rgba(20, 4, 14, 0.55);
   backdrop-filter: blur(12px);
 
   border-radius: 20px;
@@ -55,13 +78,18 @@ body {
 
   border: 1px solid rgba(255,255,255,0.2);
   box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+
+  /* hidden initially */
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.5s ease;
 }
 
 /* Text */
 h1 {
+  font-family: 'Playfair Display', serif;
   font-size: clamp(20px, 5vw, 28px);
   color: #ff9ecb;
-  text-shadow: 0 0 10px rgba(255, 158, 203, 0.6);
   margin-bottom: 15px;
 }
 
@@ -74,7 +102,6 @@ p {
 
 /* Button */
 button {
-  margin-top: 10px;
   padding: 10px 20px;
   border: none;
   background: linear-gradient(45deg, #ff4d6d, #ff9ecb);
@@ -93,10 +120,11 @@ button:hover {
 /* Hidden message */
 #msg {
   display: none;
+  opacity: 0;
   margin-top: 15px;
-  font-size: clamp(13px, 3.5vw, 15px);
   color: #ffe4ec;
   font-weight: bold;
+  font-size: clamp(13px, 3.5vw, 15px);
   line-height: 1.5;
 }
 
@@ -104,7 +132,6 @@ button:hover {
 .heart {
   position: fixed;
   bottom: -10px;
-  font-size: 20px;
   animation: floatUp 6s linear forwards;
 }
 
@@ -120,11 +147,16 @@ button:hover {
 <body>
 
 <!-- Background -->
-<div class="bg"></div>
+<div id="bg"></div>
 <div class="overlay"></div>
 
+<!-- Entry Screen -->
+<div id="entryScreen">
+  <div class="entryText" onclick="openCard()">Tap to open ❤️</div>
+</div>
+
 <!-- Audio -->
-<audio id="bgMusic" preload="auto">
+<audio id="bgMusic">
   <source src="song.mp3.mp3" type="audio/mpeg">
 </audio>
 
@@ -133,16 +165,13 @@ button:hover {
   <h1>Hey my sweet little baby girl ❤️</h1>
 
   <p>
-    I know you're stressed... I know you're scared.<br>
-    But listen to me — this exam does NOT define you.<br><br>
+    I know you're stressed... I know you're scared.<br><br>
+    This exam does NOT define you.<br><br>
 
     You've worked hard. You've come this far.<br>
-    Even if no one sees your effort, I do.<br>
-    And no matter what happens,<br>
-    I am ALWAYS proud of you.<br><br>
+    Even if no one sees it, I do.<br><br>
 
-    Even if you feel like you're breaking down,<br>
-    just remember — I'm right here with you.
+    I am ALWAYS proud of you ❤️
   </p>
 
   <button onclick="startExperience()">Tap here ❤️</button>
@@ -155,13 +184,25 @@ button:hover {
 </div>
 
 <script>
+function openCard() {
+  document.getElementById("entryScreen").style.display = "none";
+
+  const card = document.querySelector(".card");
+  card.style.opacity = "1";
+  card.style.transform = "scale(1)";
+}
+
 function startExperience() {
   const music = document.getElementById("bgMusic");
-  music.play().catch(() => {
-    alert("Tap again ❤️");
-  });
+  music.play().catch(() => alert("Tap again ❤️"));
 
-  document.getElementById("msg").style.display = "block";
+  const msg = document.getElementById("msg");
+  msg.style.display = "block";
+
+  setTimeout(() => {
+    msg.style.transition = "opacity 1.5s ease";
+    msg.style.opacity = "1";
+  }, 100);
 
   setInterval(createHeart, 300);
 }
